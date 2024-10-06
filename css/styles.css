@@ -53,3 +53,7 @@ h1 {
 .vertical-spacing-map {
     margin-bottom: 52px; /* Adjust this value to control the vertical spacing */
   }
+
+  .center-text {
+    text-align: center;
+  }
