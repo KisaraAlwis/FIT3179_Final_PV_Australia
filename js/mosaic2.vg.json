@@ -1,0 +1,67 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "data/electorate_pvmap.csv"
+    },
+    "transform": [
+      {
+        "fold": ["instals_Residential", "instals_Commercial"],
+        "as": ["instal_type", "instal_count"]
+      },
+      {
+        "aggregate": [
+          {
+            "op": "sum",
+            "field": "instal_count",
+            "as": "total_instals"
+          }
+        ],
+        "groupby": ["SED_state", "instal_type"]
+      }
+    ],
+    "mark": "bar",
+    "encoding": {
+      "x": {
+        "field": "SED_state",
+        "type": "nominal",
+        "axis": {
+          "title": "State",
+          "labelAngle": 90,  
+          "labelFontSize": 12
+        }
+      },
+      "y": {
+        "aggregate": "sum",
+        "field": "total_instals",
+        "type": "quantitative",
+        "axis": {
+          "title": "Total Installs"
+        },
+        "stack": "zero"
+      },
+      "color": {
+        "field": "instal_type",
+        "type": "nominal",
+        "legend": {
+          "title": "Install Type"
+        }
+      },
+      "tooltip": [
+        {"field": "SED_state", "type": "nominal", "title": "State"},
+        {"field": "instal_type", "type": "nominal", "title": "Install Type"},
+        {
+          "aggregate": "sum",
+          "field": "total_instals",
+          "type": "quantitative",
+          "title": "Total Installs"
+        }
+      ]
+    },
+    "config": {
+      "axis": {
+        "labelFontSize": 12,
+        "titleFontSize": 14
+      }
+    }
+  }
+  

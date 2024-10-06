@@ -1,0 +1,155 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "padding": {"left": 10, "right": 50, "top": 10, "bottom": 10},
+    "config": {
+    "legend": {"orient": "bottom", "layout": {"bottom": {"anchor": "middle"}}}
+  },
+  "data": {
+      "url": "data/AusInstallSizePerMonth_new.csv",
+      "format": {
+      "type": "csv",
+      "parse": {
+        "date": "date:'%Y-%m'"  
+      }
+      }
+    },
+    "vconcat":[
+    {"transform": [{"filter": {"param": "time_brush"}}],"width": 700,"title":"Monthly installs in PV capacity","mark": "area",
+    "encoding": {
+      "x": {
+        "timeUnit": "yearmonth",
+        "field": "date",
+        "axis": {
+          "domain": false,
+          "format": "%Y-%m",
+          "tickSize": 0
+        }
+      },
+      "y": {
+        "aggregate": "sum",
+        "field": "Count",
+        "axis": null,
+        "stack": "center"
+      },
+      "color": {
+        "field": "Category",
+        "scale": {"scheme": "category20b"}
+      },
+      "tooltip": [
+          {"field": "date", "type": "temporal", "title": "Installation date", "format":"%Y-%m"},
+          {"field": "Category", "type": "nominal", "title": "Installation size"},
+          {"field": "Count", "type": "quantitative", "title": "Total Capacity","format": ".1s"}
+        ]
+    }},
+    { "width": 700,
+      "height": 200,
+    "layer":[{
+      "mark": "line",
+      "title": "Culmulative PV Capacity",
+      "params": [
+        {
+          "name": "time_brush",
+          "select": {
+            "type": "interval",
+            "encodings": ["x"]
+          }
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "date",
+          "timeUnit": "yearmonth",
+          "axis": {
+            "title": "",
+            "format": "%Y"
+          }
+        },
+        "y": {
+          "aggregate":"sum",
+          "field": "Cumulative_Sum",
+          "axis": {
+            "tickCount": 3,
+            "grid": false
+          },
+          "title": "Running Sum"
+        }
+        
+      }
+    },{
+      "mark":{
+        "type": "text",
+            "align": "left",
+            "dx": -20,
+            "dy": -5,
+            "fontStyle": "normal",
+            "font":"sans-serif",
+            "fontWeight":100,
+            "text":"Grid-Scale Solar Power\nTripled In Australia In 2018",
+            "fontSize": 12
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "timeUnit": "yearmonth",
+          "axis": {
+            "title": "",
+            "format": "%Y"
+          }
+        },
+        "y": {
+              "datum": 15500000
+            },
+            "text":{"field": "text_annotation"}
+      },
+      "transform": [{
+        "filter": "(year(datum.date) == 2018) && (month(datum.date) == 1)"
+        
+      },
+      {
+        "calculate": "'Grid-Scale Solar Power ;Tripled 2018'",
+        "as": "text_annotation_raw"
+      },
+      {
+        "calculate": "split(datum.text_annotation_raw, ';')",
+        "as": "text_annotation"
+      }]
+    },
+    {
+      "mark":{
+        "type": "text",
+            "align": "left",
+            "dx": -12,
+            "dy": -5,
+            "fontStyle": "normal",
+            "fontWeight":100,
+            "fontSize": 12
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "timeUnit": "yearmonth",
+          "axis": {
+            "title": "",
+            "format": "%Y"
+          }
+        },
+        "y": {
+              "datum": 10500000
+            },
+            "text":{"field": "text_annotation"}
+      },
+      "transform": [{
+        "filter": "(year(datum.date) == 2010) && (month(datum.date) == 1)"
+        
+      },
+      {
+        "calculate": "'Australia installed more rooftop solar power;between January and October of 2010; than it did in the past 10 years combined'",
+        "as": "text_annotation_raw"
+      },
+      {
+        "calculate": "split(datum.text_annotation_raw, ';')",
+        "as": "text_annotation"
+      }]
+
+    }]}]
+  }

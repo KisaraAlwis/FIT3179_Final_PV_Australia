@@ -1,0 +1,84 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Australian Residential Solar Capacity (2020)",
+    "width": "container",
+    "params": [
+        {
+            "name": "zoom_level",
+            "value": 275,
+            "bind": {
+                "input": "range",
+                "min": 250,
+                "max": 60000,
+                "step": 50,
+                "name": "Zoom: "
+            }
+        },
+        {
+            "name": "center_to",
+            "value": [134.4,-25.6],
+            "bind": {
+                "input": "select",
+                "options": [
+                    [134.4,-25.6],
+                    [145, -37.95],
+                    [151.2, -33.8],
+                    [149.1, -35.2]
+                ],
+                "labels": ["None","Melbourne", "Sydney", "Canberra"],
+                "name": "Map Centre: "
+            }
+        }
+    ],
+
+    "projection": {"type": "mercator",
+    "center": { "expr": "center_to" },
+        "scale": { "expr": "zoom_level" }},
+    "config": {
+      "legend": {"orient": "bottom", "layout": {"bottom": {"anchor": "middle"}}}
+    },
+    "data": {
+        "url": "data/SED_2020.json",
+        "format": {"type": "topojson", "feature": "SED_2020_AUST"}
+        },"transform": [
+          {
+            "lookup": "properties.SED_NAME20",
+            "from": {
+              "data": {
+                "url": "data/electorate_pvmap.csv"
+              },
+              "key": "SED_name",
+              "fields": ["capacity_Residential","dwellings"]
+            }
+          },{"calculate": "datum.capacity_Residential / datum.dwellings * 1000", "as": "Capacity Per 1,000 Dwellings"}
+          ,{"calculate": "datum.capacity_Residential", "as": "Total Residential Capacity"}
+        ],
+    "layer": [{
+      "transform": [
+        {"calculate": "'Data is not available in ' + datum.properties.SED_NAME20", "as": "note"}
+      ],
+      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "black", "strokeOpacity":0.6, "strokeWidth":0.5},
+      "encoding": {
+        "tooltip": {
+          "field": "note"
+        }
+      }
+    },
+      { 
+        "mark": {"type": "geoshape", "stroke": "black", "strokeOpacity":0.6, "strokeWidth":0.5},
+        "encoding": {
+          "color": {
+            "field": "Capacity Per 1,000 Dwellings",
+            "type": "quantitative",
+            "scale": {
+          "scheme": "reds"},
+            "legend":{"titleLimit":220,"titleFontSize":10
+        }},"tooltip": [
+    {"field": "properties.SED_NAME20", "type": "nominal", "title":
+    "Electorate"},
+    {"field": "Total Residential Capacity", "type": "quantitative","format": ".1s"},
+    {"field": "Capacity Per 1,000 Dwellings", "type": "quantitative","format": ".1s"}
+  
+    ]
+    }}]
+  }

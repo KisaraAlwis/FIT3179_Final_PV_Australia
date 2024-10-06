@@ -1,0 +1,24 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container", "height": 200,
+    "data": {"url": "data/renew_share_pivoted.csv"},
+    "mark": "area",
+    "encoding": {
+      "x": {
+        "field": "date",
+        "title": "Year"
+      },
+      "y": {
+        "aggregate": "sum", "field": "Value" , "title":"Generation (GWh)"
+      },
+      "color": {
+        "field": "Energy_Source",
+        "scale": {"scheme": "category20b"}
+      },
+    "tooltip": [
+      {"field": "date", "type": "nominal", "title": "Year"},
+      {"field": "Value", "type": "quantitative", "title": "Value", "format":".1s"},
+      {"field": "Energy_Source", "type": "nominal", "title": "Energy Source"}
+    ]
+    }
+  }

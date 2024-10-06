@@ -1,0 +1,146 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width":"container",
+  "params": [
+    {
+      "name": "Chosen_Season",
+      "bind": {
+        "input": "select",
+        "options": [null, "Summer", "Autumn", "Spring", "Winter"],
+        "labels": ["Show All", "Summer", "Autumn", "Spring", "Winter"]
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "data/combined_with_seasons2016.csv"
+      },
+      "transform": [
+        {
+          "timeUnit": "hours",
+          "field": "SETTLEMENTDATE",
+          "as": "Hours"
+        },
+        {
+          "filter": "Chosen_Season == null || datum.Season == Chosen_Season"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "mean",
+              "field": "RRP",
+              "as": "Average_RRP"
+            }
+          ],
+          "groupby": ["Hours"]
+        }
+      ],
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "field": "Hours",
+          "type": "temporal",
+          "title": "Time",
+          "axis": { "format": "%I%p" }
+        },
+        "y": {
+          "field": "Average_RRP",
+          "type": "quantitative",
+          "title": "Average RRP"
+        },
+        "color": {
+          "datum": "2016",
+          "type": "nominal",
+          "title": "Year"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/combined_with_seasons2023.csv"
+      },
+      "transform": [
+        {
+          "timeUnit": "hours",
+          "field": "SETTLEMENTDATE",
+          "as": "Hours"
+        },
+        {
+          "filter": "Chosen_Season == null || datum.Season == Chosen_Season"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "mean",
+              "field": "RRP",
+              "as": "Average_RRP"
+            }
+          ],
+          "groupby": ["Hours"]
+        }
+      ],
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "field": "Hours",
+          "type": "temporal",
+          "title": "Time",
+          "axis": { "format": "%I%p" }
+        },
+        "y": {
+          "field": "Average_RRP",
+          "type": "quantitative",
+          "title": "Average RRP"
+        },
+        "color": {
+          "datum": "2023",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/combined_with_seasons2020.csv"
+      },
+      "transform": [
+        {
+          "timeUnit": "hours",
+          "field": "SETTLEMENTDATE",
+          "as": "Hours"
+        },
+        {
+          "filter": "Chosen_Season == null || datum.Season == Chosen_Season"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "mean",
+              "field": "RRP",
+              "as": "Average_RRP"
+            }
+          ],
+          "groupby": ["Hours"]
+        }
+      ],
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "field": "Hours",
+          "type": "temporal",
+          "title": "Time",
+          "axis": { "format": "%I%p" }
+        },
+        "y": {
+          "field": "Average_RRP",
+          "type": "quantitative",
+          "title": "Average RRP"
+        },
+        "color": {
+          "datum": "2020",
+          "type": "nominal"
+        }
+      }
+    }
+  ]
+}
