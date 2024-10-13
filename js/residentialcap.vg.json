@@ -1,6 +1,6 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "Australian Residential Solar Capacity (2020)",
+    "title": "Australian Residential Solar Capacity in kW (2020)",
     "width": "container",
     "params": [
         {
@@ -9,7 +9,7 @@
             "bind": {
                 "input": "range",
                 "min": 250,
-                "max": 60000,
+                "max": 15000,
                 "step": 50,
                 "name": "Zoom: "
             }

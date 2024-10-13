@@ -1,0 +1,40 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "title": "Power Station Installations Across Australia",
+  "projection": {"type": "mercator", "scale": 250, "center":[134.4,-25.6]},
+  "config": {
+      "legend": {"orient": "bottom", "layout": {"bottom": {"anchor": "middle"}}}
+    },
+  "layer": [
+    {
+      "data": {
+        "url": "data/AUSTATENEW.json",
+        "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
+      },
+      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
+    },
+    {
+      "data": {
+        "url": "data/powerstation.csv"
+      },
+      "transform": [{"calculate": "datum.installs_Power_Station", "as": "Number of Powerstations"}],
+      "mark": {"type": "circle", "tooltip": {"content": "data"}},
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "size": {
+          "field": "installs_Power_Station",
+          "type": "quantitative",
+          "title": "Number of Power Stations" 
+        },
+        "tooltip": [
+    {"field": "state_name", "type": "nominal", "title":
+    "State"},
+    {"field": "Number of Powerstations", "type": "quantitative","format": ".1s"}
+          
+    ]
+      }
+    }
+  ]
+}

@@ -1,14 +1,15 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width":"container",
+  "width":350,
   "params": [
     {
       "name": "Chosen_Season",
       "bind": {
         "input": "select",
         "options": [null, "Summer", "Autumn", "Spring", "Winter"],
-        "labels": ["Show All", "Summer", "Autumn", "Spring", "Winter"]
-      }
+        "labels": ["Show All", "Summer", "Autumn", "Spring", "Winter"],
+        "name": "Select Season"
+      }      
     }
   ],
   "layer": [

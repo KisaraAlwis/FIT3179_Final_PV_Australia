@@ -1,24 +1,31 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": "container", "height": 200,
-    "data": {"url": "data/renew_share_pivoted.csv"},
-    "mark": "area",
-    "encoding": {
-      "x": {
-        "field": "date",
-        "title": "Year"
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 200,
+  "data": {"url": "data/renew_share_pivoted.csv"},
+  "mark": "area",
+  "encoding": {
+    "x": {
+      "field": "date",
+      "title": "Year",
+      "axis": {"labelAngle": -45}
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "Value",
+      "title": "Generation (GWh)"
+    },
+    "color": {
+      "field": "Energy_Source",
+      "scale": {
+        "range": ["#1b9e77", "#7570b3","#d95f02",  "#e7298a"]
       },
-      "y": {
-        "aggregate": "sum", "field": "Value" , "title":"Generation (GWh)"
-      },
-      "color": {
-        "field": "Energy_Source",
-        "scale": {"scheme": "category20b"}
-      },
+      "title": "Energy Source"
+    },
     "tooltip": [
       {"field": "date", "type": "nominal", "title": "Year"},
-      {"field": "Value", "type": "quantitative", "title": "Value", "format":".1s"},
+      {"field": "Value", "type": "quantitative", "title": "Generation (GWh)", "format": ".1s"},
       {"field": "Energy_Source", "type": "nominal", "title": "Energy Source"}
     ]
-    }
   }
+}
