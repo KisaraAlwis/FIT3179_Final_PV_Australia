@@ -131,6 +131,14 @@
       ]
     },
     {
+      "width": 700,
+      "height": 50,
+      "mark": {"type": "text", "align": "center", "fontWeight": "lighter", "fontSize": 14},
+      "encoding": {
+        "text": {"value": "Use the time brush above to zoom in on specific time periods."}
+      }
+    },
+    {
       "transform": [{"filter": {"param": "time_brush"}}],
       "width": 700,
       "height":300,
@@ -175,6 +183,14 @@
           {"field": "Category", "type": "nominal", "title": "Installation size"},
           {"field": "Count", "type": "quantitative", "title": "Total Capacity (kW)", "format": ".1s"}
         ]
+      }
+    },
+    {
+      "width": 700,
+      "height": 50,
+      "mark": {"type": "text", "align": "center", "fontWeight": "lighter", "fontSize": 14},
+      "encoding": {
+        "text": {"value": "Select on the legend to highlight specific install sizes"}
       }
     }
   ]
